@@ -1,0 +1,23 @@
+{
+  "name": "traveling-salesperson",
+  "version": "1.0.0",
+  "description": "Brute force solution to the travelling  salesperson problem",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ert135/maze-generator.git"
+  },
+  "author": "Robert Smith",
+  "license": "ISC",
+  "homepage": "https://github.com/ert135/maze-generator#readme",
+  "dependencies": {
+    "p5": "0.6.1",
+    "awesome-typescript-loader": "^3.4.0",
+    "webpack": "^3.12.0",
+    "source-map-loader": "^0.2.3",
+    "typescript": "^2.9.2"
+  }
+}
