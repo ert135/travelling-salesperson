@@ -76506,91 +76506,38 @@ module.exports = g;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var grid_1 = __webpack_require__(4);
 exports.p5Wrapper = function (sketch) {
-    var grid;
+    var cities = [];
+    var citiesLength = 5;
+    //dirty swap
+    function swap(array, firstIndex, secondIndex) {
+        var temp = array[firstIndex];
+        array[firstIndex] = array[secondIndex];
+        array[secondIndex] = temp;
+    }
+    function calculateDistance(points) {
+    }
     sketch.setup = function () {
         sketch.createCanvas(800, 800);
-        grid = new grid_1.default(sketch, 800, 800, 16);
+        for (var i = 0; i < citiesLength; i++) {
+            var vector = sketch.createVector(sketch.random(800), sketch.random(800));
+            cities[i] = vector;
+        }
     };
     sketch.draw = function () {
-        grid.drawGrid();
+        sketch.background(0);
+        cities.forEach(function (city) {
+            sketch.ellipse(city.x, city.y, 5, 5);
+        });
+        sketch.stroke(255);
+        sketch.noFill();
+        sketch.beginShape();
+        cities.forEach(function (city) {
+            sketch.vertex(city.x, city.y);
+        });
+        sketch.endShape();
     };
 };
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Cell_1 = __webpack_require__(5);
-var Grid = /** @class */ (function () {
-    function Grid(p5Ref, width, height, resolution) {
-        this.p5Ref = p5Ref;
-        this.width = width;
-        this.height = height;
-        this.resolution = resolution;
-        this.cells = [];
-        //800 / 16 = 50
-        this.cols = Math.floor(this.width / this.resolution);
-        this.rows = Math.floor(this.height / this.resolution);
-        this.buildGrid();
-    }
-    Grid.prototype.buildGrid = function () {
-        console.log('Making grid', this.cols, this.rows);
-        for (var i = 0; i < this.cols; i++) {
-            for (var j = 0; j < this.rows; j++) {
-                this.cells.push(new Cell_1.default(this.p5Ref, i, j));
-            }
-        }
-        console.log('cells here now are ', this.cells);
-    };
-    Grid.prototype.drawGrid = function () {
-        var _this = this;
-        this.cells.forEach(function (cell) {
-            cell.draw(_this.resolution);
-        });
-    };
-    return Grid;
-}());
-exports.default = Grid;
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Cell = /** @class */ (function () {
-    function Cell(p5Ref, i, j) {
-        this.p5Ref = p5Ref;
-        this.i = i;
-        this.j = j;
-    }
-    /*
-        Passiung in the width here is a bit hacky,
-        but each cell needs to know the totaL width of the grid
-        so it can draw itsself in the position
-    */
-    Cell.prototype.draw = function (width) {
-        var x = this.i * width;
-        var y = this.j * width;
-        // this.p5Ref.rect(x,y,width,width);
-        //Wall drawing logic
-        //top right bottom left
-        this.p5Ref.line(x, y, x + width, y);
-        this.p5Ref.line(x + width, y, x + width, y + width);
-        this.p5Ref.line(x + width, y + width, x, y + width);
-        this.p5Ref.line(x, y + width, x, y);
-    };
-    return Cell;
-}());
-exports.default = Cell;
 
 
 /***/ })
