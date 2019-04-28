@@ -76509,20 +76509,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.p5Wrapper = function (sketch) {
     var cities = [];
     var citiesLength = 5;
+    var recordDistance = 0;
     //dirty swap
     function swap(array, firstIndex, secondIndex) {
         var temp = array[firstIndex];
         array[firstIndex] = array[secondIndex];
         array[secondIndex] = temp;
     }
+    //might not work?
     function calculateDistance(points) {
+        return points.reduce(function (totalDistance, currentPoint, index, pointArray) {
+            if (pointArray[index + 1]) {
+                return totalDistance + sketch.dist(currentPoint.x, currentPoint.y, pointArray[index + 1].x, pointArray[index + 1].y);
+            }
+            return null;
+        }, 0);
     }
+    ;
     sketch.setup = function () {
         sketch.createCanvas(800, 800);
         for (var i = 0; i < citiesLength; i++) {
             var vector = sketch.createVector(sketch.random(800), sketch.random(800));
             cities[i] = vector;
         }
+        recordDistance = calculateDistance(cities);
     };
     sketch.draw = function () {
         sketch.background(0);
@@ -76536,6 +76546,13 @@ exports.p5Wrapper = function (sketch) {
             sketch.vertex(city.x, city.y);
         });
         sketch.endShape();
+        var index = Math.floor(sketch.random(cities.length));
+        var j = Math.floor(sketch.random(cities.length));
+        swap(cities, index, j);
+        var d = calculateDistance(cities);
+        if (d < recordDistance) {
+            recordDistance = d;
+        }
     };
 };
 
